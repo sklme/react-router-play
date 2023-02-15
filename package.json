@@ -12,15 +12,19 @@
     "postinstall": "tsx scripts/apply-hooks.ts"
   },
   "dependencies": {
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@iskl/eslint-plugin": "^1.1.2",
     "@types/node": "^18.11.19",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@types/sort-by": "^1.2.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
