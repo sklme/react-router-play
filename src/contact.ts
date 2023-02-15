@@ -70,6 +70,6 @@ async function fakeNetwork(key: string) {
 
   fakeCache[key] = true;
   return new Promise((res) => {
-    setTimeout(res, Math.random() * 800);
+    setTimeout(res, Math.random() * 2000);
   });
 }
