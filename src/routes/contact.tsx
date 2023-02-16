@@ -85,7 +85,11 @@ interface FavoriteProps {
 
 function Favorite({ contact }: FavoriteProps) {
   const fetcher = useFetcher();
-  const { favorite } = contact;
+  let { favorite } = contact;
+
+  if (fetcher.formData) {
+    favorite = fetcher.formData.get('favorite') === 'true';
+  }
   return (
     <fetcher.Form method="post">
       <button
