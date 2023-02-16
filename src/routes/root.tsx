@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Outlet,
   NavLink,
@@ -13,7 +14,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const q = url.searchParams.get('q');
   const contacts = (await getContacts(q)) as Record<string, string>[];
-  return { contacts };
+  return { contacts, q };
 }
 
 export async function action() {
@@ -23,11 +24,16 @@ export async function action() {
 }
 
 export default function Root() {
-  const { contacts } = useLoaderData() as {
+  const { contacts, q } = useLoaderData() as {
     contacts: Record<string, string>[];
+    q: string;
   };
 
   const navigation = useNavigation();
+  useEffect(() => {
+    const input = document.getElementById('q') as HTMLInputElement;
+    input.value = q;
+  }, [q]);
 
   return (
     <>
@@ -41,6 +47,7 @@ export default function Root() {
               placeholder="Search"
               type="search"
               name="q"
+              defaultValue={q}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
