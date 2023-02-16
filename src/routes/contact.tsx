@@ -1,12 +1,18 @@
-import { Form } from 'react-router-dom';
+import { Form, LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
+import { getContact } from '~/contact';
+
+export async function loader({ params }: LoaderFunctionArgs) {
+  const contact = (await getContact(params.contactId)) as Record<
+    string,
+    string
+  >;
+
+  return contact;
+}
+
 export default function Contact() {
-  const contact = {
-    first: 'Your',
-    last: 'Name',
-    avatar: 'https://placekitten.com/g/200/200',
-    twitter: 'your_handle',
-    notes: 'Some notes',
-    favorite: true,
+  const contact = useLoaderData() as Record<string, string> & {
+    favorite: boolean;
   };
 
   return (
