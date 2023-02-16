@@ -28,6 +28,7 @@ const router = createBrowserRouter([
       {
         path: 'contacts/:contactId/destroy',
         action: destroyAction,
+        errorElement: <div>删除失败，你这不切实际的毛虫！</div>,
       },
     ],
     loader: rootLoader,
