@@ -27,6 +27,12 @@ export default function Contact() {
   const contact = useLoaderData() as Record<string, string> & {
     favorite: boolean;
   };
+  if (!contact) {
+    throw new Response('', {
+      status: 404,
+      statusText: 'Not Found',
+    });
+  }
 
   return (
     <div id="contact">
