@@ -1,5 +1,11 @@
-import { Form, LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
-import { getContact } from '~/contact';
+import {
+  ActionFunction,
+  Form,
+  LoaderFunctionArgs,
+  useFetcher,
+  useLoaderData,
+} from 'react-router-dom';
+import { getContact, updateContact } from '~/contact';
 
 export async function loader({ params }: LoaderFunctionArgs) {
   const contact = (await getContact(params.contactId)) as Record<
@@ -9,6 +15,13 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
   return contact;
 }
+
+export const action: ActionFunction = async function ({ request, params }) {
+  const formData = await request.formData();
+  return updateContact(params.contactId, {
+    favorite: formData.get('favorite') === 'true',
+  });
+};
 
 export default function Contact() {
   const contact = useLoaderData() as Record<string, string> & {
@@ -71,10 +84,10 @@ interface FavoriteProps {
 }
 
 function Favorite({ contact }: FavoriteProps) {
-  // yes, this is a `let` for later
+  const fetcher = useFetcher();
   const { favorite } = contact;
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? 'false' : 'true'}
@@ -82,6 +95,6 @@ function Favorite({ contact }: FavoriteProps) {
       >
         {favorite ? '★' : '☆'}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
