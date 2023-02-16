@@ -4,6 +4,7 @@ import {
   useLoaderData,
   Form,
   redirect,
+  useNavigation,
 } from 'react-router-dom';
 import { getContacts, createContact } from '~/contact';
 
@@ -23,6 +24,9 @@ export default function Root() {
   const { contacts } = useLoaderData() as {
     contacts: Record<string, string>[];
   };
+
+  const navigation = useNavigation();
+
   return (
     <>
       <div id="sidebar">
@@ -51,7 +55,7 @@ export default function Root() {
                   <NavLink
                     to={`contacts/${contact.id}`}
                     className={({ isActive, isPending }) =>
-                      isActive ? 'pending' : isPending ? 'pending' : ''
+                      isActive ? 'active' : isPending ? 'pending' : ''
                     }
                   >
                     {contact.first || contact.last ? (
@@ -73,7 +77,10 @@ export default function Root() {
           )}
         </nav>
       </div>
-      <div id="detail">
+      <div
+        id="detail"
+        className={navigation.state === 'loading' ? 'loading' : ''}
+      >
         <Outlet />
       </div>
     </>
