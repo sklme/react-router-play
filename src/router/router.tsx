@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '~/error-page';
+import Index from '~/routes';
 import Contact, { loader as contactLoader } from '~/routes/contact';
 import { action as destroyAction } from '~/routes/destroy';
 import EditContact, { action as editAction } from '~/routes/edit';
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     element: <Root></Root>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
+      {
+        index: true,
+        element: <Index />,
+      },
       {
         path: 'contacts/:contactId',
         element: <Contact />,
