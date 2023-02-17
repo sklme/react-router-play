@@ -6,7 +6,14 @@ import {
   useLoaderData,
 } from 'react-router-dom';
 import { getContact, updateContact } from '~/contact';
-import { count, doubleCount } from '~/store/index.store';
+import {
+  count,
+  doubleCount,
+  writableCount,
+  onlyReadCount,
+  incrementByOnlyRead,
+  incrementOnlyRead,
+} from '~/store/index.store';
 import { useAtom } from 'jotai';
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -38,6 +45,12 @@ export default function Contact() {
 
   const [_count, setCount] = useAtom(count);
   const [double] = useAtom(doubleCount);
+
+  const [_writableCount, increment] = useAtom(writableCount);
+
+  const [_onlyReadCount] = useAtom(onlyReadCount);
+  const [, _incrementOnlyRead] = useAtom(incrementOnlyRead);
+  const [, _incrementByOnlyRead] = useAtom(incrementByOnlyRead);
 
   return (
     <div>
@@ -92,9 +105,28 @@ export default function Contact() {
         </div>
       </div>
       <div>
+        <h3>nomal atom and derived atom</h3>
         <div>count: {_count}</div>
         <div>doubleCount: {double}</div>
         <button onClick={() => setCount(_count + 1)}>setCount</button>
+        <br />
+      </div>
+      <div>
+        <h3>writable atom</h3>
+        <div>writableCount: {_writableCount}</div>
+        <button onClick={increment}>wirtableCount Increment</button>
+      </div>
+      <div>
+        <h3>Write only atoms</h3>
+        <div>onlyReadCount: {_onlyReadCount}</div>
+        <button onClick={_incrementOnlyRead}>onlyReadCount Increment</button>
+        <button
+          onClick={() => {
+            _incrementByOnlyRead(3);
+          }}
+        >
+          onlyReadCount Increment by 3
+        </button>
       </div>
     </div>
   );
