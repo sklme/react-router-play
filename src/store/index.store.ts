@@ -23,3 +23,15 @@ export const incrementOnlyRead = atom(null, (get, set) =>
 export const incrementByOnlyRead = atom(null, (get, set, by: number) =>
   set(onlyReadCount, get(onlyReadCount) + by)
 );
+
+// async action
+async function asyncGetIncrementBy() {
+  return new Promise<number>((resolve) => setTimeout(() => resolve(3), 1000));
+}
+
+export const asyncCount = atom(0);
+export const incrementByAsyncCount = atom(null, async (get, set) => {
+  const by = await asyncGetIncrementBy();
+
+  set(asyncCount, get(asyncCount) + by);
+});

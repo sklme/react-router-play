@@ -13,6 +13,8 @@ import {
   onlyReadCount,
   incrementByOnlyRead,
   incrementOnlyRead,
+  asyncCount,
+  incrementByAsyncCount,
 } from '~/store/index.store';
 import { useAtom } from 'jotai';
 
@@ -51,6 +53,9 @@ export default function Contact() {
   const [_onlyReadCount] = useAtom(onlyReadCount);
   const [, _incrementOnlyRead] = useAtom(incrementOnlyRead);
   const [, _incrementByOnlyRead] = useAtom(incrementByOnlyRead);
+
+  const [_asyncCount] = useAtom(asyncCount);
+  const [, _incrementByAsync] = useAtom(incrementByAsyncCount);
 
   return (
     <div>
@@ -126,6 +131,17 @@ export default function Contact() {
           }}
         >
           onlyReadCount Increment by 3
+        </button>
+      </div>
+      <div>
+        <h3>async atoms</h3>
+        <div>asyncCount: {_asyncCount}</div>
+        <button
+          onClick={() => {
+            void _incrementByAsync();
+          }}
+        >
+          Increment Async
         </button>
       </div>
     </div>
